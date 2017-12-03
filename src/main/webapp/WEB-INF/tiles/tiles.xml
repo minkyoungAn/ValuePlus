@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+ <definition name="layout" template="/WEB-INF/views/tiles/layout.jsp">
+ <put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp"/>
+ <put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp"/>
+ </definition>
+ 
+ <!-- controller에서 setViewName이 */* 이면 layout을 적용해라. 
+ 	{1}.jsp	{2}.jsp {1}/{2}.jsp 유연하게 사용 가능!
+ -->
+ <definition name="*/*" extends="layout">
+ <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"/>
+ </definition>
+
+ 
+ </tiles-definitions>
