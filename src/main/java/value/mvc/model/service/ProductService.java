@@ -3,11 +3,19 @@ package value.mvc.model.service;
 import java.util.List;
 
 import value.mvc.model.dto.BidderDTO;
+import value.mvc.model.dto.CategoryDTO;
 import value.mvc.model.dto.ProcessDTO;
 import value.mvc.model.dto.ProductDTO;
 import value.mvc.model.dto.ProductPhotoDTO;
+import value.mvc.model.dto.mainListProductDTO;
 
 public interface ProductService {
+	
+	/**
+	 * 기능 : 전체리스트 상품검색
+	 * 작성자 : 안민경
+	 */
+	List<mainListProductDTO> selectMainListProduct(String sort);
 	
 	/**
 	 * 전체상품 검색
@@ -73,6 +81,27 @@ public interface ProductService {
 	 * @return
 	 */
 	List<BidderDTO> selectAllBidding (String productNo);
+
+	/**
+	 * 대분류 전체 보기
+	 * 작성자 : 안민경
+	 * @return
+	 */
+	List<CategoryDTO> selectAllCategory();
+
+	/**
+	 * 대분류별 상품 불러오기
+	 * @param bigCategoryName
+	 */
+	List<mainListProductDTO> selectMainListProductByCategory(String bigCategoryName);
+
+	/**
+	 * 카테고리 중분류 불러오기
+	 * 작성자 : 안민경
+	 * @param bigCategoryName
+	 * @return
+	 */
+	List<CategoryDTO> selectDivisionsByCategory(String bigCategoryName);
 	
 	
 }

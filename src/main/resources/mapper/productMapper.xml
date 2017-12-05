@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="productMapper">
+
+<sql id="product">
+product_no, product_name, division_no, product_id, price, description, bid_unit, successful_bidder
+</sql>
+
+<resultMap type="mainListProductDTO" id="mainListProduct">
+<id column="product_no" property="productNo"/>
+<result column="thumbnail_path" property="thumbnailPath"/>
+<result column="product_name" property="productName"/>
+<result column="price" property="price"/>
+<result column="count_bidder" property="countBidder"/>
+<result column="selling_id" property="id"/>
+<result column="deadline" property="deadline"/>
+</resultMap>
+
+<select id="selectAllMainList" parameterType="String" resultMap="mainListProduct">
+select product.product_no as product_no, thumbnail_path, product_name, price, count(bidder_list.id) as count_bidder, selling_list.id as selling_id, deadline 
+from product, product_photo, selling_list, bidder_list
+where product.product_no = product_photo.product.no and
+product.product_no = bidder_list.product_no and
+product.product_no = selling_list.product_no 
+<if test="sort!=null">
+order by ${sort}
+</if>
+
+</select>
+
+<select id="selectCategory" resultType="categoryDTO">
+select category_no as categoryNo, category_name as categoryName from category
+</select>
+
+<select id="selectProductByCategory" parameterType="String" resultMap="mainListProduct">
+select product.product_no as product_no, thumbnail_path, product_name, price, count(bidder_list.id) as count_bidder, selling_list.id as selling_id, deadline 
+from product, product_photo, selling_list, bidder_list, category
+where product.product_no = product_photo.product.no and
+product.product_no = bidder_list.product_no and
+product.product_no = selling_list.product_no and 
+product.product_no = category.product_no
+</select>
+
+<select id="selectDivisionByCategory" parameterType="String" resultType="categoryDTO">
+select division_no as categoryNo, division_name as categoryName from division join category
+on  category.category_no = division.category_no
+where category_name = #{bigCategoryName}
+</select>
+
+
+</mapper>
