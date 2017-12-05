@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import value.mvc.model.dao.ProductDAO;
 import value.mvc.model.dto.BidderDTO;
+import value.mvc.model.dto.CategoryDTO;
 import value.mvc.model.dto.ProductDTO;
 import value.mvc.model.dto.ProductPhotoDTO;
+import value.mvc.model.dto.mainListProductDTO;
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -17,8 +19,34 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	@Override
+	public List<CategoryDTO> selectAllCategory() {
+		List<CategoryDTO> list = productDao.selectAllCategory();
+		return list;
+		
+	}
+	
+	@Override
+	public List<mainListProductDTO> selectMainListProduct(String sort) {
+		List<mainListProductDTO> list = productDao.selectMainListProduct(null);
+		return list;
+	}
+
+	
+	@Override
+	public List<mainListProductDTO> selectMainListProductByCategory(String bigCategoryName) {
+		 List<mainListProductDTO> list = productDao.selectMainListProductByCategory(bigCategoryName);
+		return list;
+	}
+
+	@Override
+	public List<CategoryDTO> selectDivisionsByCategory(String bigCategoryName) {
+		List<CategoryDTO> list = productDao.selectDivisionsByCategory(bigCategoryName);
+		return list;
+	}
+
+	@Override
 	public List<ProductDTO> selectAllProduct(String sort) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -69,5 +97,8 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
+	
 
 }

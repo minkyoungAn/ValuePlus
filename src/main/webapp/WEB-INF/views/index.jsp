@@ -8,5 +8,7 @@
 </head>
 <body>
 index 페이지 입니다.
+
+<a href="list">전체 list</a>
 </body>
 </html>
