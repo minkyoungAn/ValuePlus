@@ -29,7 +29,7 @@ public class ProductController {
 	 */
 	@RequestMapping("/list")
 	public ModelAndView list(HttpServletRequest request) {
-		System.out.println("왔다");
+		System.out.println("왔다ㄹㄴㅇㄹㅇㅁ");
 		String bigCategoryName = request.getParameter("categoryName");
 		String sort = request.getParameter("sort");
 		ModelAndView mv = new ModelAndView();
