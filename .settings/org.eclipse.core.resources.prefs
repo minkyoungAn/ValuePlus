@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+encoding//src/main/java/value/mvc/spring/security/MemberAuthenticationFailureHandler.java=UTF-8
+encoding//src/main/java/value/mvc/spring/security/MemberAuthenticationProvider.java=UTF-8
+encoding//src/main/webapp/WEB-INF/views/info.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/permitPay.jsp=UTF-8

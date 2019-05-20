@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="authoritiesMapper">
+	<resultMap type="authority" id="authorityMap">
+  		  <id column="user_id" property="userId"/>
+  		  <result column="role" property="role"/>
+	</resultMap>
+	<!-- 회원의 권한 검색하기 -->
+	<select id="selectAuthorityByUserName" parameterType="string" resultMap="authorityMap">
+		SELECT
+		user_id, role
+		FROM authorities
+		WHERE user_id=#{id}
+	</select>
+	
+	<insert parameterType="authority" id="insertAuthority"> 
+	insert into AUTHORITIES values(#{userId} , #{role})
+	 </insert>
+</mapper>

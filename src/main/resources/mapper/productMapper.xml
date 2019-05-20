@@ -1,50 +1,286 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="productMapper">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductMapper">
+<!-- 민경누나 list -->
 
-<sql id="product">
-product_no, product_name, division_no, product_id, price, description, bid_unit, successful_bidder
-</sql>
-
-<resultMap type="mainListProductDTO" id="mainListProduct">
-<id column="product_no" property="productNo"/>
-<result column="thumbnail_path" property="thumbnailPath"/>
-<result column="product_name" property="productName"/>
-<result column="price" property="price"/>
-<result column="count_bidder" property="countBidder"/>
-<result column="selling_id" property="id"/>
-<result column="deadline" property="deadline"/>
-</resultMap>
-
-<select id="selectAllMainList" parameterType="String" resultMap="mainListProduct">
-select product.product_no as product_no, thumbnail_path, product_name, price, count(bidder_list.id) as count_bidder, selling_list.id as selling_id, deadline 
-from product, product_photo, selling_list, bidder_list
-where product.product_no = product_photo.product.no and
-product.product_no = bidder_list.product_no and
-product.product_no = selling_list.product_no 
-<if test="sort!=null">
-order by ${sort}
-</if>
-
-</select>
-
-<select id="selectCategory" resultType="categoryDTO">
-select category_no as categoryNo, category_name as categoryName from category
-</select>
-
-<select id="selectProductByCategory" parameterType="String" resultMap="mainListProduct">
-select product.product_no as product_no, thumbnail_path, product_name, price, count(bidder_list.id) as count_bidder, selling_list.id as selling_id, deadline 
-from product, product_photo, selling_list, bidder_list, category
-where product.product_no = product_photo.product.no and
-product.product_no = bidder_list.product_no and
-product.product_no = selling_list.product_no and 
-product.product_no = category.product_no
-</select>
-
-<select id="selectDivisionByCategory" parameterType="String" resultType="categoryDTO">
-select division_no as categoryNo, division_name as categoryName from division join category
-on  category.category_no = division.category_no
-where category_name = #{bigCategoryName}
-</select>
+	<resultMap type="mainListProductDTO" id="mainListProduct">
+		<id column="no" property="productNo" />
+		<result column="thumbnail_path" property="thumbnailPath" />
+		<result column="product_name" property="productName" />
+		<result column="price" property="price" />
+		<result column="bid_count" property="bidCount" />
+		<result column="id" property="id" />
+		<result column="deadline" property="deadline" />
+		<result />
+	</resultMap>
 
 
+   <!-- 메인 top5 불러오기 -->
+   <select id="mainContent" parameterType="String" resultMap="mainListProduct">
+      select no, thumbnail_path, product_name, price,
+      bid_count, id, deadline from (select * from (select product.product_no as no, thumbnail_path, product_name, price,
+      bid_count, user_id as id, deadline, view_state, start_date
+      from product
+      join
+      product_photo
+      on product.product_no = product_photo.product_no
+      join
+      process
+      on process.product_no = product.product_no
+      where process_state = '경매중' 
+      or process_state='입금대기' or process_state='구매확정') where view_state='open'
+      order by ${value})
+      where ROWNUM &lt; 6
+   </select>
+   <!-- 전체리스트 불러오기 -->
+   <select id="selectAllList" resultMap="mainListProduct"
+      parameterType="String">
+     select no, thumbnail_path, product_name, price,
+      bid_count, id, deadline from
+      (select product.product_no as no, thumbnail_path, product_name, price,
+      bid_count, user_id as id, deadline, view_state, start_date
+      from product
+      join
+      product_photo
+      on product.product_no = product_photo.product_no
+      join
+      process
+      on process.product_no = product.product_no
+      where process_state = '경매중' 
+      or process_state='입금대기' or process_state='구매확정') where view_state='open'
+      order by ${value}
+   </select>
+   
+   <!-- 중분류 리스트 불러오기 -->
+   <select id="selectListByDivision" resultMap="mainListProduct"
+      parameterType="map">
+      select no, thumbnail_path, product_name, price,
+      bid_count, id, deadline from
+      (select product.product_no as no, thumbnail_path, product_name, price,
+      bid_count, user_id as id, deadline, division.division_name, view_state, start_date
+      from product
+      join division
+      on product.division_no = division.division_no
+      join
+      product_photo
+      on product.product_no = product_photo.product_no
+      join
+      process
+      on process.product_no = product.product_no
+      where process_state = '경매중' 
+      or process_state='입금대기' or process_state='구매확정') where view_state='open' and division_name=#{divisionName}
+      order by ${sort}
+   </select>
+   
+   <!-- 대분류 리스트 불러오기 -->
+   <select id="selectListByCategory" resultMap="mainListProduct"
+      parameterType="map">             
+         select no, thumbnail_path, product_name, price,
+      bid_count, id, deadline from
+      (select product.product_no as no, thumbnail_path, product_name, price,
+      bid_count, user_id as id, deadline, category_name, view_state, start_date
+      from product
+      join
+      product_photo
+      on product.product_no = product_photo.product_no
+      join
+      process
+      on process.product_no = product.product_no
+      where process_state = '경매중' 
+      or process_state='입금대기' or process_state='구매확정') where category_name = #{categoryName} and view_state='open'
+      order by ${sort}         
+   </select>
+   
+   
+   
+	
+	
+	<!-- 유저이름, 제목별 상품리스트 -->
+	<select id="selectListProductBySeller" resultMap="mainListProduct"
+      parameterType="String">
+      select distinct * from(select product.product_no as no, thumbnail_path, product_name, price,
+      bid_count, user_id as id, deadline
+      from product
+      join
+      product_photo
+      on product.product_no = product_photo.product_no
+      join
+      process
+      on process.product_no = product.product_no
+      and process_state = '경매중'   
+      or process_state='입금대기' or process_state='구매확정' and view_state='open') 
+        where upper(id) like upper('%' || #{value} || '%')
+      or upper(product_name) like upper('%' || #{value} || '%')
+   </select>
+	
+	
+	<!-- 대분류 불러오기 -->
+	<select id="selectCategory" resultType="String">
+		select category_name as
+		categoryName from category
+	</select>
+
+	<!-- 중분류 불러오기 -->
+	<select id="selectDivisionByCategory" parameterType="String"
+		resultType="String">
+		select division_name from division join category
+		on
+		category.category_no = division.category_no
+		where category_name =
+		#{categoryName}
+	</select>
+	<!-- 대분류검색 -->
+	<select id="selectCategoryByKeyword" parameterType="String" resultType="categoryDTO">
+	select category_no as categoryNo, category_name as categoryName from category where upper(category_name) like upper('%' || #{value} || '%')
+	</select>
+	<!-- 중분류검색 -->
+	<select id="selectDivisionByKeyword" parameterType="String" resultType="categoryDTO">
+	select division_no as categoryNo, division_name as categoryName from division where  upper(division_name) like upper('%' || #{value} || '%')
+	</select>
+	
+	<!-- 카테고리 하나검색 -->
+	<select id="selectOneCategory" parameterType="String" resultType="String">
+	select category_no from division where division_name= #{value}
+	</select>
+
+	<select id="selectCategoryName" parameterType="String" resultType="String">
+	select category_name from category where category_no= #{value}
+	</select>
+	<!-- 희건추가 -->
+	<select id="selectOneProduct" parameterType="string" resultType="productDTO">
+		select product_name as productName, price, description, deadline,
+		bid_unit as bidUnit, start_price as startPrice
+		from product
+		where
+		product_no=#{val}
+	</select>
+	<select id="selectProductPhoto" parameterType="string"
+		resultType="productPhotoDTO">
+		select thumbnail_path as thumbnailPath, photo1_path as
+		photo1Path, photo2_path as photo2Path, photo3_path as photo3Path,
+		photo4_path as photo4Path, photo5_path as photo5Path, photo6_path as
+		photo6Path, photo7_path as photo7Path, photo8_path as photo8Path,
+		photo9_path as photo9Path
+		from product_photo
+		where product_no=#{val}
+	</select>
+	<select id="selectSellerId" parameterType="string" resultType="string">
+		select user_id
+		from selling_list
+		where product_no=#{val}
+	</select>
+	<select id="selectAllBidding" parameterType="string" resultType="bidderDTO">
+		select user_id as id, bid_time as bidTime, bid_price as price
+		from
+		bidder_list
+		where product_no=#{val}
+		order by bid_time desc
+	</select>
+	<select id="selectBidderCount" parameterType="string"
+		resultType="int">
+		select count(product_no)
+		from bidder_list
+		where
+		product_no=#{val}
+	</select>
+	<select id="selectSellerGrade" parameterType="string"
+		resultType="string">
+		select grade
+		from customer
+		where user_id=#{val}
+	</select>
+	<select id="selectIsInterest" parameterType="interestDTO" resultType="string">
+		select interest_no
+		from interest_item
+		where product_no=#{productNo} and user_id=#{userID}
+	</select>	
+	<insert id="newInterest" parameterType="interestDTO">
+		insert into interest_item
+		values('i'||interest_s.nextval,#{productNo},#{userID})
+	</insert>	
+	<select id="deadlineChk" parameterType="string" resultType="int">
+		select deadline-sysdate 
+		from product 
+		where product_no=#{val}
+	</select>	
+	<select id="seenChk" parameterType="seenProductDTO" resultType="string">
+		select seen_no 
+		from seen_product
+		where product_no = #{productNo} and user_id=#{userId}
+	</select>	
+	<insert id="insertSeen" parameterType="seenProductDTO">
+		insert into seen_product
+		values ('s'||seen_product_s.nextval,#{productNo},#{userId},sysdate)
+	</insert>	
+	<!-- 혜민 추가 -->
+	<select id="selectCategoryHM" resultType="categoryDTO">
+		select category_no as categoryNo, category_name as categoryName from
+		category
+	</select>
+	<select id="selectDivisionHM" parameterType="String" resultType="categoryDTO">
+		select division_no as categoryNo, division_name as categoryName from division join category
+		on category.category_no = division.category_no
+		where category_name = #{categoryName}
+	</select>	
+	<insert id="insertProductHM" parameterType="productDTO">
+		insert into product(product_no,product_name, division_no,start_price,price,description, auction_During, bid_Unit, category_name,user_Id) 
+		values('p'||product_s.nextval,#{productName},#{divisionNo},#{startPrice},#{startPrice},#{description},#{auctionDuring},#{bidUnit},#{categoryName},#{userId})
+	</insert>
+	<select id="selectDivisionNameHM" parameterType="string" resultType="string">
+		select division_no from division where division_name=#{divisionNo}
+	</select>	
+	<insert id="insertProductPhotoHM" parameterType="productPhotoDTO">
+		insert into product_photo 
+		values('p'||product_s.CURRVAL,#{thumbnailPath},#{photo1Path},#{photo2Path},#{photo3Path},#{photo4Path},#{photo5Path},#{photo6Path},#{photo7Path},#{photo8Path},#{photo9Path})
+	</insert>	
+	<insert id="insertProcessProductNameHM" parameterType="productDTO">
+		insert into process(product_no) 
+		values('p'||product_s.CURRVAL) 
+	</insert>
+	<!-- mapper 맨 하단에 삽입 -->
+	<delete id="deleteInterest" parameterType="interestDTO">
+	    delete from interest_item 
+	    where product_no=#{productNo} 
+	    and user_id=#{userID}
+	</delete>
+	<update id="updatePrice" parameterType="bidderDTO">
+		update product set price= #{price} where product_no= #{productNo}
+	</update>
+	<!-- 낙찰하기 -->
+	<update id="updateProcessByTimeout" parameterType="String">
+		update process set process_state='입금대기' where product_no=#{value}
+	</update>
+	
+	<select id="selectSuccessfulBidder" parameterType="String" resultType="String">
+	select user_id from (select user_id from bidder_list where product_no=#{value} order by bid_time desc) where ROWNUM &lt; 2
+	</select>
+	
+	
+	<update id="updateBidderByTimeout" parameterType="map">
+		update product set successful_bidder=#{id} where product_no=#{productNo}
+	</update>
+	
+	<update id="closeProductList">
+		update process set view_state='close' 
+		where process_state='입금대기' or process_state='입금완료' 
+		or process_state='배송중' or process_state='배송완료'
+		or process_state='구매확정'
+		and view_state='open'
+	</update>
+	<update id="updateState" parameterType="transactionalInformationDTO">
+	   UPDATE PROCESS 
+	   SET process_state = '구매확정' 
+	   WHERE product_no = #{productNo}
+	</update>	
+		<!-- 12/16 추가 -->
+	<select id="selectAlreadySuccessfulBidder" parameterType="String" resultType="String">
+		select successful_bidder from product where product_no=#{value}
+	</select>
+	<!-- 12/17 추가 -->
+	<update id="updateBuyingListByTimeout" parameterType="String">
+		insert into buying_list(product_no, user_id, buylist_no) values(#{productNo}, #{id}, 'b'||buying_list_seq.nextval)
+	</update>
+	<update id="updateProcessEndByTimeout" parameterType="String">
+		update process set process_state='구매확정' where product_no=#{value}
+	</update>
 </mapper>

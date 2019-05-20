@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gradeMapper">
+<resultMap type="customerDTO" id="customerMap">
+  		  <id column="user_id" property="id"/>
+  		  <result column="pw" property="pw"/>
+  		  <result column="name" property="name"/>
+  		  <result column="email" property="email"/>
+  		  <result column="birth" property="birth"/>
+  		  <result column="zipNo" property="zipNo"/>
+  		  <result column="roadAddrPart1" property="roadAddrPart1"/>
+  		  <result column="addrDetail" property="addrDetail"/>
+  		  <result column="phone" property="phone"/>
+  		  <result column="grade" property="grade"/>
+  		  <result column="sellCount" property="sellCount"/>
+  		  <result column="buyCount" property="buyCount"/>
+	</resultMap>
+<update id="updateBuyCount" parameterType="string">
+update customer
+set buycount=buycount+1
+where user_id=#{buyId}
+</update>
+<update id="updateSellCount" parameterType="string">
+update customer
+set sellcount=sellcount+1
+where user_id=#{sellId} 
+</update>
+<select id="selectBuyCountById" parameterType="string" resultType="int">
+select buycount
+from customer
+where user_id=#{buyId}
+</select>
+<select id="selectSellCountById" parameterType="string"  resultType="int">
+select sellcount
+from customer
+where user_id=#{sellId}
+</select>
+<update id="updateGradeToGoldBuy" parameterType="string">
+update customer
+set grade = 'gold'
+where user_id=#{buyId}
+</update>
+<update id="updateGradeToFamBuy" parameterType="string">
+update customer
+set grade = 'fam'
+where user_id=#{buyId}
+</update>
+<update id="updateGradeToVipBuy" parameterType="string">
+update customer
+set grade = 'vip'
+where user_id=#{buyId}
+</update>
+<update id="updateGradeToVvipBuy" parameterType="string">
+update customer
+set grade = 'vvip'
+where user_id=#{buyId}
+</update>
+<update id="updateGradeToGoldSell" parameterType="string">
+update customer
+set grade = 'gold'
+where user_id=#{sellId}
+</update>
+<update id="updateGradeToFamSell" parameterType="string">
+update customer
+set grade = 'fam'
+where user_id=#{sellId}
+</update>
+<update id="updateGradeToVipSell" parameterType="string">
+update customer
+set grade = 'vip'
+where user_id=#{sellId}
+</update>
+<update id="updateGradeToVvipSell" parameterType="string">
+update customer
+set grade = 'vvip'
+where user_id=#{sellId}
+</update>
+</mapper>

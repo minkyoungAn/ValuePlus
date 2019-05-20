@@ -1,6 +1,266 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="CustomerMapper">
+<mapper namespace="customerMapper">
+	<sql id="selectCustomer">
+		select
+		user_id,pw,name,email,birth,zipNo,roadAddrPart1,addrDetail,phone,grade
+		from customer
+	</sql>
+	<resultMap type="accountDTO" id="selectAccountMap">
+		<id property="userId" column="user_id" />
+		<result property="bankName" column="bank_name" />
+		<result property="accountHolder" column="account_holder" />
+		<result property="accountNo" column="account_no" />
+	</resultMap>
+	<resultMap type="customerDTO" id="selectCustomerMap">
+		<id property="id" column="user_id" />
+		<result property="name" column="name" />
+		<result property="email" column="email" />
+		<result property="phone" column="phone" />
+		<result property="zipNo" column="zipno" />
+		<result property="roadAddrPart1" column="roadAddrPart1" />
+		<result property="addrDetail" column="addrdetail" />
+	</resultMap>
+	<resultMap type="customerDTO" id="customerMap">
+		<id column="user_id" property="id" />
+		<result column="pw" property="pw" />
+		<result column="name" property="name" />
+		<result column="email" property="email" />
+		<result column="birth" property="birth" />
+		<result column="zipNo" property="zipNo" />
+		<result column="roadAddrPart1" property="roadAddrPart1" />
+		<result column="addrDetail" property="addrDetail" />
+		<result column="phone" property="phone" />
+		<result column="grade" property="grade" />
+	</resultMap>
+	<resultMap type="transactionalInformationDTO" id="selectSellingMap">
+		<id property="customerId" column="USER_ID" />
+		<result property="productNo" column="product_no" />
+		<result property="prodImg" column="THUMBNAIL_PATH" />
+		<result property="prodName" column="PRODUCT_NAME" />
+		<result property="bidderDate" column="DEADLINE" />
+		<result property="nowPrice" column="PRICE" />
+		<result property="prodState" column="PROCESS_STATE" />
+	</resultMap>
+	<resultMap type="paymentDTO" id="paymentMap">
+		<result property="productNo" column="product_no" />
+		<result property="name" column="name" />
+		<result property="price" column="price" />
+	</resultMap>
+	<resultMap type="transactionalInformationDTO" id="selectBuyingMap">
+		<id property="customerId" column="USER_ID" />
+		<result property="prodImg" column="THUMBNAIL_PATH" />
+		<result property="prodName" column="PRODUCT_NAME" />
+		<result property="bidderDate" column="DEADLINE" />
+		<result property="nowPrice" column="PRICE" />
+		<result property="prodState" column="PROCESS_STATE" />
+		<result property="productNo" column="PRODUCT_NO" />
+	</resultMap>
+	<resultMap type="questionDTO" id="selectQuestionMap">
+		<id property="userId" column="USER_ID" />
+		<result property="questionNo" column="QUESTION_NO" />
+		<result property="questiontitle" column="QUESTION_TITLE" />
+		<result property="questionWriteDate" column="QUESTION_WRITEDATE" />
+		<result property="questionProcess" column="QUESTION_PROCESS" />
+	</resultMap>
 
+	<resultMap type="questionDTO" id="selectOneQuestionMap">
+		<id property="userId" column="USER_ID" />
+		<result property="questionNo" column="QUESTION_NO" />
+		<result property="questiontitle" column="QUESTION_TITLE" />
+		<result property="questionContent" column="QUESTION_CONTENT" />
+		<result property="questionWriteDate" column="QUESTION_WRITEDATE" />
+		<result property="answerContent" column="ANSWER_CONTENT" />
+	</resultMap>
+	<resultMap type="productDTO" id="selectInterestMap">
+		<result property="thumbnailPath" column="thumbnail_path" />
+		<result property="prodName" column="Product_name" />
+		<result property="price" column="price" />
+		<result property="deadline" column="deadline" />
+		<result property="sellerId" column="user_id" />
+	</resultMap>
+	<select id="login" parameterType="customerDTO" resultMap="customerMap">
+		select
+		user_id,pw,name,email,birth,zipNo,roadAddrPart1,addrDetail,phone,grade
+		from customer
+		where user_id=#{id} and pw=#{pw}
+	</select>
+	<select id="selectCustomerById" parameterType="String"
+		resultMap="customerMap">
+		select
+		user_id,pw,name,email,birth,zipNo,roadAddrPart1,addrDetail,phone,grade
+		from customer
+		WHERE user_id=#{userId}
+	</select>
+	<insert id="joinCustomer" parameterType="customerDTO">
+		insert into
+		customer(user_id,pw,name,email,birth,zipNo,roadAddrPart1,addrDetail,phone)
+		values(#{id},#{pw},#{name},#{email},#{birth},#{zipNo},#{roadAddrPart1},#{addrDetail},#{phone})
+	</insert>
+	<select id="idCheck" parameterType="string" resultType="int">
+		select
+		count(*) from customer where user_id=#{id}
+	</select>
+	<select id="findId" parameterType="string" resultType="string">
+		select
+		user_id from customer where name=#{name}
+	</select>
+	<select id="findPw" parameterType="string" resultType="string">
+		select
+		user_id from customer where user_id=#{id}
+	</select>
+	<update id="updatePw" parameterType="customerDTO">
+		update customer set pw=#{pw}
+		where user_id=#{id}
+	</update>
+	<select id="selectSelling" parameterType="string" resultMap="selectSellingMap">
+		select f.THUMBNAIL_PATH as prodImg, p.PRODUCT_NAME as prodName,
+		p.DEADLINE as bidderDate, p.PRICE as nowPrice, r.PROCESS_STATE as
+		prodState, p.PRODUCT_NO as productNo
+		from SELLING_LIST s
+		inner join
+		PRODUCT p on s.PRODUCT_NO = p.PRODUCT_NO
+		inner join PRODUCT_PHOTO f on
+		f.PRODUCT_NO = p.PRODUCT_NO
+		inner join PROCESS r on r.product_no =
+		p.PRODUCT_NO
+		where s.USER_ID = #{id}
+	</select>
 
+	<select id="selectBuying" parameterType="string" resultMap="selectBuyingMap">
+		select f.THUMBNAIL_PATH as prodImg, p.PRODUCT_NAME as prodName,
+		p.DEADLINE as bidderDate, p.PRICE as nowPrice, r.PROCESS_STATE as
+		prodState, p.PRODUCT_NO as productNo
+		,p.user_id as sellId
+		from
+		BUYING_LIST s
+		inner join PRODUCT p on s.PRODUCT_NO = p.PRODUCT_NO
+		inner
+		join PRODUCT_PHOTO f on f.PRODUCT_NO = p.PRODUCT_NO
+		inner join PROCESS
+		r on r.product_no = p.PRODUCT_NO
+		where s.USER_ID = #{id}
+	</select>
+	<insert id="insertBuyingList" parameterType="buyingListDTO">
+		insert into
+		buying_list values(#{productNo},#{userId},'b'||BUYING_S.nextval)
+	</insert>
+
+	<select id="paymentSystem" parameterType="customerDTO"
+		resultMap="customerMap">
+		select
+		user_id,pw,name,email,birth,zipNo,roadAddrPart1,addrDetail,phone,grade
+		from customer
+		where name=#{name} and phone=#{phone} and
+		email=lower(#{email})
+	</select>
+	<insert id="insertPayment" parameterType="paymentDTO">
+		insert into
+		payment_list
+		values('p'||pay_s.nextval,#{productNo},#{price},#{name})
+	</insert>
+	<update id="updateProcessByPay" parameterType="string">
+		update process
+		set
+		process_state='입금완료'
+		where product_no=#{productNo}
+	</update>
+	<update id="updateProcessBydel" parameterType="string">
+		update process
+		set
+		process_state='배송중'
+		where product_no=#{productNo}
+	</update>
+
+	<select id="selectAccount" parameterType="string" resultMap="selectAccountMap">
+		select user_id as userId, bank_name as bankName, account_holder as
+		accountHolder, account_no as accountNo
+		from account
+		where user_id = #{id}
+	</select>
+
+	<update id="updateAccount" parameterType="accountDTO">
+		update account
+		set bank_name = #{bankName}, account_no = #{accountNo}
+		where user_id = #{userId}
+	</update>
+
+	<update id="updateProfile" parameterType="customerDTO">
+		update customer
+		set email = #{email}, phone = #{phone}, zipno = #{zipNo}, roadaddrpart1 =
+		#{roadAddrPart1}, addrdetail = #{addrDetail}
+		where user_id = #{id}
+	</update>
+
+	<select id="selectCustomer" parameterType="string" resultMap="selectCustomerMap">
+		select user_id as id, name as name, email as email, phone as phone,
+		zipno as zipNo, roadaddrpart1,addrDetail
+		from customer
+		where user_id = #{id]
+	</select>
+
+	<select id="selectQuestion" parameterType="string" resultMap="selectQuestionMap">
+		select QUESTION_NO as questionNo, QUESTION_TITLE as questiontitle,
+		QUESTION_WRITEDATE as questionWriteDate, QUESTION_PROCESS as
+		questionProcess
+		from question
+		where user_id = #{userId}
+	</select>
+
+	<select id="selectOneQuestion" parameterType="string"
+		resultMap="selectOneQuestionMap">
+		select QUESTION_TITLE as questiontitle, user_id as id, QUESTION_WRITEDATE as
+		questionWriteDate, QUESTION_CONTENT as questionContent, ANSWER_CONTENT
+		as answerContent
+		from question
+		where question_no = #{questionNo}
+	</select>
+
+	<select id="selectInterest" parameterType="string" resultMap="selectInterestMap">
+		select p.Product_name as prodName, p.price as price, p.deadline as
+		deadline, p.user_id as sellerId, t.thumbnail_path as thumbnailPath
+		from interest_item i
+		inner join PRODUCT p on i.PRODUCT_NO = p.PRODUCT_NO
+		inner join PRODUCT_Photo t on i.PRODUCT_NO = t.PRODUCT_NO
+		where i.user_id = #{userId}
+	</select>
+
+	<select id="selectToday" parameterType="string" resultMap="selectInterestMap">
+		select p.Product_name as prodName, p.price as price, p.deadline as
+		deadline, p.user_id as sellerId, t.thumbnail_path as thumbnailPath
+		from seen_product i
+		inner join PRODUCT p on i.PRODUCT_NO = p.PRODUCT_NO
+		inner join PRODUCT_Photo t on i.PRODUCT_NO = t.PRODUCT_NO
+		where i.user_id = #{userId}
+	</select>
+
+	<!-- 12/16 민경추가 낙찰자 email productName -->
+	<select id="selectMailingEmail" parameterType="String"
+		resultType="String">
+		select email from customer where user_id=#{value}
+	</select>
+
+	<select id="selectMailingProductName" parameterType="String"
+		resultType="String">
+		select product_name from product where product_no=#{value}
+	</select>
+
+	<select id="selectMailingSellerId" parameterType="String"
+		resultType="String">
+		select user_id from selling_list where product_no=#{value}
+	</select>
+
+	<update id="updatePwByUser" parameterType="customerDTO">
+		update customer set pw=#{pw}
+		where user_id=#{id}
+	</update>
+	<select id="selectWaitSelling" parameterType="string" resultMap="selectSellingMap">
+		select f.THUMBNAIL_PATH as prodImg, p.PRODUCT_NAME as prodName,
+		p.DEADLINE as bidderDate, p.PRICE as nowPrice, r.PROCESS_STATE as
+		prodState, p.PRODUCT_NO as productNo
+		from PRODUCT p
+		inner join PRODUCT_PHOTO f on f.PRODUCT_NO = p.PRODUCT_NO
+		inner join PROCESS r on r.product_no = p.PRODUCT_NO
+		where p.USER_ID = #{id} and r.PROCESS_STATE = '승인대기'
+	</select>
 </mapper>

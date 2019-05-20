@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BidderMapper">
+
+<!-- <resultMap type="bidderDTO" id="selectMap">
+<id property="" column=""/>
+<result property="" column=""/>
+</resultMap> -->
+
+<!-- <select id="bidderSelect" parameterType="string" resultType="bidderDTO">
+	select p.product_name bidProdName, s.user_id sellerId, p.deadline bidTime, p.bid_unit bidUnit, p.price price, c.grade grade
+	from product p inner join selling_list s on p.product_no = s.product_no 
+	inner join customer c on s.USER_ID = c.USER_ID
+	where p.PRODUCT_NO = 'p1'
+</select> -->
+<insert id="insertBidding" parameterType="bidderDTO">
+	insert into bidder_list 
+	values(#{productNo},#{id},#{price},sysdate,'b'||bid_s.nextval)
+</insert>
+<update id="updateBidding" parameterType="String">
+	update product set bid_count=(select count(user_id) from bidder_list where product_no = #{value})
+	where product_no = #{value}
+</update>
+
+</mapper>

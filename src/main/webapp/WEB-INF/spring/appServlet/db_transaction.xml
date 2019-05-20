@@ -16,7 +16,7 @@
     <value>/WEB-INF/spring/appServlet/dbInfo.properties</value>
   </property>
 </bean>
-
+	
 <!-- DB설정(JDBC) -->
 <bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">
   <property name="driverClassName" value="${driverName}"/>

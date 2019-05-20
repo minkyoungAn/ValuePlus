@@ -1,23 +1,44 @@
 package value.mvc.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import value.mvc.model.dto.AccountDTO;
 import value.mvc.model.dto.CustomerDTO;
 import value.mvc.model.dto.NoticeDTO;
 import value.mvc.model.dto.ProductDTO;
 import value.mvc.model.dto.QuestionDTO;
+import value.mvc.model.dto.TransactionalInformationDTO;
 
 
 public interface CustomerService {
-
+	/**
+	 * 마이 페이지 비밀번호 수정
+	 */
+	void updatePwByUser(CustomerDTO customerDTO);
+	/**
+	 * 비밀번호 수정하기
+	 */
+	void updatePw(CustomerDTO customerDTO);
+	/**
+	 * 비밀번호 찾기
+	 */
+	String findPw(String id);
+	/**
+	 * 아이디 찾기
+	 */
+	String findId(String name);
 	/**
 	 * 가입하기
 	 * @param customerDTO
 	 * @return
 	 */
-	int joinCustomer (CustomerDTO customerDTO);
-	
+	void joinCustomer (CustomerDTO customerDTO);
+	/**
+	 * 아이디 중복 체크
+	 */
+	String idCheck(String id);
+	 int test();
 	/**
 	 * 마이페이지 내정보 보기
 	 * @param id
@@ -45,7 +66,7 @@ public interface CustomerService {
 	 * @param password
 	 * @return
 	 */
-	String loginCustomer (String id, String password);
+	String loginCustomer (CustomerDTO customerDTO);
 	
 	/**
 	 * 로그아웃
@@ -88,7 +109,7 @@ public interface CustomerService {
 	 * @param id
 	 * @return
 	 */
-	ProductDTO selectInterest (String id);
+	List<ProductDTO> selectInterest (String id);
 	
 	/**
 	 * 관심목록 추가
@@ -109,14 +130,14 @@ public interface CustomerService {
 	 * @param id
 	 * @return
 	 */
-	List<ProductDTO> selectSelling (String id);
+	List<TransactionalInformationDTO> selectSelling (String id);
 	
 	/**
 	 * 구매내역보기 (내가 응찰한 내역)
 	 * @param id
 	 * @return
 	 */
-	List<ProductDTO> selectBuying (String id);
+	List<TransactionalInformationDTO> selectBuying (String id);
 
 	/**
 	 * 공지사항 검색
@@ -173,5 +194,32 @@ public interface CustomerService {
 	 * @return
 	 */
 	int deleteQuestion (String questionNo);
-
+	/**
+	 * 내정보수정
+	 * @param accountDTO
+	 * @return
+	 */
+	int updateProfile (CustomerDTO customerDTO);
+	 /**
+	 * 오늘 본 상품 목록 검색
+	 * @param id
+	 * @return
+	 */
+	List<ProductDTO> selectToday (String id);
+	/**
+	 * 민경추가 12/15 오늘본상품 삭제
+	 */
+	void deleteTodaySeeProduct();
+	/**
+	 * 민경추가 12/16 낙찰자 메일보낼 정보가져오기
+	 */
+	Map<String, String> selectMailingBuyerInfo(String id, String productNo);
+	/**
+	 * 민경추가 12/16 판매자 메일보낼 정보가져오기
+	 * @param productNo
+	 * @return
+	 */
+	Map<String, String> selectMailingSellerInfo(String productNo);
+	/////////
+	List<TransactionalInformationDTO> selectWaitSelling(String id);
 }

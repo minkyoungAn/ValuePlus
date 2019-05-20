@@ -6,6 +6,12 @@ public class ProcessDTO {
 	private String checkPurchase;
 	
 	
+	public ProcessDTO(String productNo, String waybillNo, String checkPurchase) {
+		super();
+		this.productNo = productNo;
+		this.waybillNo = waybillNo;
+		this.checkPurchase = checkPurchase;
+	}
 	public String getProductNo() {
 		return productNo;
 	}

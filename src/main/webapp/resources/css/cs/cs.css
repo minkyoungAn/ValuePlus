@@ -1,0 +1,212 @@
+.container {
+	width: 100%;
+	height: 1000px;
+	float: left;
+}
+
+input {
+	border: 0px;
+}
+
+.content_popup_title h5 {
+	width: 100%;
+	height: 20px;
+	float: left;
+	border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+	padding-left: 20px;
+	box-sizing: border-box;
+	font-weight: bold;
+}
+
+.content_popup_title input {
+	text-align: center;
+	width: 100%;
+	float: left;
+}
+
+#noticeContent2 {
+	height: 220px;
+}
+
+#closeBtn2 {
+	height: 40px;
+	border: 2px solid gray;
+	color: black;
+	background-color: white;
+	transition: 0.2s;
+}
+
+#closeBtn2:hover {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+#selectNotice_wrap {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.8);
+	z-index: 10;
+}
+
+#selectNotice {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	width: 500px;
+	height: 300px;
+	border-radius: 15px;
+	overflow: hidden;
+}
+
+.selectNotice_pop {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+.selectNotice_pop>input {
+	width: 100%;
+	heightL: 20px;
+	float: left;
+	position: absolute;
+	left: 0;
+	bottom: 10px;
+	background-color: #888;
+	color: white;
+}
+
+.selectNotice_pop table {
+	width: 100%;
+	float: left;
+}
+
+.selectNotice_pop table th {
+	background-color: #888;
+	color: white;
+	text-align: center;
+}
+
+.selectNotice_pop table td {
+	margin-top: 10px;
+	text-align: center;
+}
+
+.selectNotice_pop table td>input {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+
+.content_tr {
+	margin-top: 20px;
+	border-top: 1px solid rgba(0, 0, 0, 0S .1);
+	height: 200px;
+	border-top: 1px solid rgba(0, 0, 0, 0S .1);
+}
+
+.cs_top {
+	font-size: 20px;
+	width: 100%;
+	height: 50px;
+	float: left;
+	line-height: 50px;
+	padding-left: 50px;
+	box-sizing: border-box;
+	border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+	width: 100%;
+}
+
+.cs_manubar {
+	font-size: 18px;
+	width: 100%;
+	height: 50px;
+	float: left;
+	line-height: 50px;
+	padding-left: 50px;
+	box-sizing: border-box;
+	border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.cs_manubar>input {
+	height: 45px;
+}
+
+.cs_sidebar {
+	width: 100%;
+	height: 50px;
+	margin-top: 30px;
+	float: left;
+}
+
+.cs_sidebar>p {
+	float: left;
+}
+
+.cs_sidebar>p>a {
+	width: 300px;
+	height: 50px;
+	float: left;
+	text-align: center;
+	line-height: 50px;
+	border: 1px solid #01DFA5;
+	color: #01DFA5;
+	background: white;
+	margin-left: 250px;
+	text-decoration: none;
+	transition: 0.3s;
+	border-radius: 10px;
+}
+
+.cs_sidebar>p:hover>a {
+	color: white;
+	background: #01DFA5;
+	font-size: 18px;
+}
+
+#cs_center {
+	width: 100%;
+	float: left;
+	height: 300px;
+	margin-top: 100px;
+}
+#cs_center1 {
+	width: 100%;
+	float: left;
+	height: 300px;
+	margin-top: 100px;
+}
+
+#cs_center table {
+	width: 60%;
+	height: 250px;
+	overflow: auto;
+}
+
+#cs_center table tr {
+	height: 40px;
+}
+
+#cs_center table th {
+	text-align: center;
+	background: #888;
+	color: white;
+}
+
+#cs_center table td {
+	text-align: center;
+}
+
+/* 자주묻는질문 */
+#FAQ {
+	display: none;
+}
+.div01{
+	
+	height:200px !important;
+}

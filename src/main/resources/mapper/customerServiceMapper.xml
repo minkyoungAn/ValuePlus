@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customerServiceMapper">
+	<resultMap type="questionDTO" id="questionMap">
+  		  <id column="question_no" property="questionNo"/>
+  		  <result column="user_id" property="userId"/>
+  		  <result column="question_Title" property="questionTitle"/>
+  		  <result column="question_Content" property="questionContent"/>
+  		  <result column="question_Writedate" property="questionWritedate"/>
+  		  <result column="question_process" property="questionProcess"/>
+  		  <result column="answer_content" property="answerContent"/>
+	</resultMap>
+	
+	<resultMap type="customerDTO" id="customerMap">
+  		  <id column="user_id" property="id"/>
+  		  <result column="pw" property="pw"/>
+  		  <result column="name" property="name"/>
+  		  <result column="email" property="email"/>
+  		  <result column="birth" property="birth"/>
+  		  <result column="zipNo" property="zipNo"/>
+  		  <result column="roadAddrPart1" property="roadAddrPart1"/>
+  		  <result column="addrDetail" property="addrDetail"/>
+  		  <result column="phone" property="phone"/>
+  		  <result column="grade" property="grade"/>
+	</resultMap>
+	
+	<resultMap type="noticeDTO" id="noticeMap">
+  		  <id column="notice_no" property="noticeNo"/>
+  		  <result column="notice_Title" property="noticeTitle"/>
+  		  <result column="notice_Writedate" property="noticeWritedate"/>
+  		  <result column="notice_Content" property="noticeContent"/>
+	</resultMap>
+	
+	<insert id="insertQuestion" parameterType="questionDTO">
+		insert into question 
+		values('q'||question_s.nextval,#{userId},#{questionTitle},#{questionContent},sysdate,null,'NO')
+	</insert>
+		<!-- 민경추가 -->
+	<delete id="deleteTodaySeeProduct">
+		delete from seen_product
+	</delete>
+	
+</mapper>

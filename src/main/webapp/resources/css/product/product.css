@@ -1,0 +1,333 @@
+* {
+	margin: 0 auto;
+}
+
+.item {
+	padding: 20px;
+}
+
+.button>button {
+	padding: 15px;
+	width: 100%;
+	height: 100%;
+	outline: none;
+	cursor: pointer;
+}
+
+.start {
+	width: 500px;
+}
+
+#product-overview tbody>tr>td {
+	margin-left: 50px;
+}
+/*testing*/
+/*set a border on the images to prevent shifting*/
+#gallery_01 img {
+	border: 2px solid white;
+}
+
+/*Change the colour*/
+.active img {
+	border: 2px solid #333 !important;
+}
+
+#overview-specific {
+	margin-top: 20px;
+}
+
+.xzoom-gallery {
+	width: 50px;
+	height: 50px;
+}
+
+.xzoom {
+	width: 300px;
+	height: 300px;
+}
+
+#counter2, overview-title {
+	font-family: arial;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+#countdown {
+	font-family: arial;
+	text-align: center;
+	font-size: 30px;
+	font: arial;
+	font-weight: bold;
+}
+
+.product-overview {
+	width: 100%;
+	height: 450px;
+	float: left;
+}
+
+.product-overview-wrap {
+	width: 80%;
+	height: 100%;
+}
+
+.product-content {
+	width: 100%;
+	height: 300px;
+	float: left;
+	margin-bottom: 20px;
+}
+
+.product-content-wrap {
+	width: 70%;
+	height: 100%;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.product-content:nth-child(2n)>div div {
+	text-align: right;
+	float: right;
+}
+
+.product-img {
+	width: 40%;
+	height: 100%;
+	float: left;
+	text-align: center;
+	padding-top: 15px;
+	box-sizing: border-box;
+}
+
+.product-img img {
+	width: 95%;
+	height: 95%;
+}
+
+#product-content {
+	width: 55%;
+	height: 100%;
+	float: left;
+	font-size: 15px;
+	padding-top: 110px;
+	box-sizing: border-box;
+}
+
+table td {
+	text-align: center;
+}
+
+.xzoom-thumbs {
+	margin-top: 30px;
+}
+
+.d_table {
+	margin-left: 80px;
+}
+
+.description_title {
+	width: 100%;
+	height: 70px;
+	text-align: center;
+	line-height: 70px;
+	float: left;
+}
+
+#addview {
+	width: 20px;
+	height: 20px;
+	margin-left: 20px;
+	font-size: 15px;
+	text-align: center;
+}
+/* table{
+   height: 690px;
+   width: 780px;
+    border-spacing: 0;
+    border-collapse: collapse;
+} */
+#grade_icon {
+	height: 30px;
+	width: 30px;
+}
+
+.bidderbtn {
+	background: #114da5;
+	color: #fff;
+}
+
+.bidder-modal-footer {
+	height: 40px;
+}
+
+.bidder-modal-footer>button {
+	width: 49%;
+	height: 100%;
+	float: left;
+	border-radius: 2px;
+	margin-left: 5px;
+}
+
+.btn {
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+.tableDefault>table>tbody>tr>td {
+	text-align: left;
+	padding: 7px 24px;
+}
+
+.tableDefault>table>tbody>tr>th {
+	width: 180px;
+	height: 37px;
+}
+
+.bidderModal {
+	position: absolute;
+	width: 760px;
+	height: 600px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	border-radius: 10px;
+}
+
+#grade_icon {
+	width: 15px;
+	height: 15px;
+}
+
+.popup {
+	display: none;
+	position: fixed;
+	z-index: 10;
+	background-color: rgba(0, 0, 0, 0.8);
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.8);
+	position: fixed;
+}
+
+.table_footer>div {
+	width: 65%;
+	margin-top: 10px;
+}
+
+#bidPriceSelect {
+	height: 21px;
+	outline: none;
+	border: none;
+	border-bottom: 1px solid gray;
+}
+
+.fs18i {
+	background-color: rgba(0, 0, 0, 0.01);
+	border-bottom: 1px solid gray;
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	height: 40px;
+}
+
+#user_modal_close {
+	width: 17px;
+	height: 17px;
+	font-size: 12px;
+	text-align: center;
+	float: right;
+	margin-right: 20px;
+	margin-top: 12px;
+	margin-right: 20px;
+}
+
+.popup_user {
+	display: none;
+	position: fixed;
+	z-index: 10;
+	background-color: rgba(0, 0, 0, 0.8);
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.8);
+	position: fixed;
+	position: fixed;
+}
+
+.user_modal {
+	position: absolute;
+	width: 500px;
+	height: 550px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	border-radius: 10px;
+}
+
+.user_modal>table {
+	width: 100%;
+	height: 450px;
+	overflow: scroll;
+}
+.xzoom-thumbs {
+	width: 171px;
+	height: 60px;
+	overflow: hidden;
+	position: relative;
+	transition: 0.5s;
+}
+
+.xzoom-thumbs-wrap {
+	position: absolute;
+	left: 0;
+	width: 300%;
+	height: 60px;
+	width: 100%;
+	transition: 0.5s;
+}
+
+.xzoom-thumbs-wrap>a {
+	float: left;
+}
+
+.slide {
+	position: relative;
+	height: 60px;
+}
+
+.slide>button {
+	height: 85%;
+	width: 50px;
+	background: no-repeat;
+	outline: none;
+}
+
+.slide>button:hover {
+	color: #01DFA5;
+	cursor: pointer;
+}
+
+.left {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.right {
+	position: absolute;
+	top: 0;
+	right: 0;
+}

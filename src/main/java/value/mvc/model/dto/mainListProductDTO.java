@@ -1,7 +1,5 @@
 package value.mvc.model.dto;
 
-import org.springframework.stereotype.Component;
-
 /**
  * 전체 상품 리스트
  * @author minky
@@ -12,9 +10,11 @@ public class mainListProductDTO {
 	private String thumbnailPath;
 	private String productName;
 	private int price;
-	private int countBidder;
+	private int bidCount;
 	private String id;
 	private String deadline;
+
+	
 	
 	public String getProductNo() {
 		return productNo;
@@ -40,11 +40,12 @@ public class mainListProductDTO {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public int getCountBidder() {
-		return countBidder;
+
+	public int getBidCount() {
+		return bidCount;
 	}
-	public void setCountBidder(int countBidder) {
-		this.countBidder = countBidder;
+	public void setBidCount(int bidCount) {
+		this.bidCount = bidCount;
 	}
 	public String getId() {
 		return id;
@@ -58,6 +59,7 @@ public class mainListProductDTO {
 	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}
+
 	
 	
 }

@@ -1,0 +1,168 @@
+.find_main_wrap {
+	width: 100%;
+	height: 550px;
+	float: left;
+	position: relative;
+	background-color: white;
+}
+
+.find_main {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 60%;
+	height: 80%;
+	position: absolute;
+	width: 60%;
+	text-align: center;
+}
+
+.find_main>h1 {
+	width: 100%;
+	float: left;
+	font-size: 40px;
+	margin: 0;
+}
+
+.find_sub {
+	width: 100%;
+	float: left;
+	margin-top: 20px;
+	font-size: 18px;
+	color: gray;
+}
+
+.input_text {
+	width: 70%;
+	height: 50%;
+	transition: 0.5s;
+}
+
+.find_btn_wrap {
+	width: 100%;
+	height: 10%;
+	float: left;
+	margin-top: 20px;
+}
+
+.find_btn {
+	width: 80%;
+	height: 100%;
+}
+
+.find_btn>input {
+	width: 45%;
+	height: 100%;
+	border: 1px solid #01DFA5;
+	border-radius: 20px;
+	background: white;
+	color: #01DFA5;
+	outline: none;
+	float: left;
+	margin-left: 20px;
+	float: left;
+	transition: 0.05s;
+}
+
+.find_form {
+	margin-top: 30px;
+	width: 100%;
+	float: left;
+	height: 50%;
+	width: 100%;
+}
+
+.find_form>div {
+	width: 50%;
+	height: 0%;
+	overflow: hidden;
+	transition: 0.3s;
+}
+
+.find_form_id {
+	float: left;
+}
+
+.find_form_password {
+	float: right;
+}
+
+.form {
+	width: 100%;
+	height: 100%;
+}
+
+.form_header {
+	width: 100%;
+	height: 80%;
+	float: left;
+}
+
+.form_footer {
+	width: 100%;
+	height: 20%;
+	float: left;
+}
+
+.form_header>div {
+	height: 30%;
+	text-align: center;
+	box-sizing: border-box;
+	padding-top: 20px;
+}
+
+.form_header>div>input {
+	outline: none;
+	border-bottom: 2px solid gray;
+	float: left;
+	height: 30px;
+}
+
+.id_input {
+	width: 100%;
+	float: left;
+}
+
+.email_input {
+	width: 100%;
+	float: left;
+}
+
+.emailCheck_input {
+	width: 100%;
+	float: left;
+}
+
+.eChk {
+	width: 100px;
+}
+
+.form_footer>input {
+	outline: none;
+	width: 40%;
+	height: 80%;
+	margin-right: 20px;
+	width: 40%;
+}
+
+#emailCheck {
+	font-size: 16px;
+	color: gray;
+}
+
+.find_header {
+	text-align: center;
+	width: 100%;
+	float: left;
+	height: 40%;
+	width: 100%;
+}
+
+.findIdDiv {
+	width: 100%;
+	float: left;
+	height: 60%;
+	text-align: center;
+	padding-top: 20px;
+	box-sizing: border-box;
+}

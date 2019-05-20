@@ -1,0 +1,168 @@
+* {
+	margin: 0 auto;
+	padding: 0px;
+	border: none;
+	text-decoration: none;
+}
+
+.thumbnail_img {
+	width: 250px;
+	height: 150px;
+	overflow: hidden;
+}
+
+
+.thumbnail_img img {
+	height: 100%;
+}
+
+.main_content {
+	width: 100%;
+	height: 400px;
+	float: left;
+	background-color: #333;
+	margin-bottom: 50px;
+}
+
+.main_content>div>img {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	transition: 0.5s;
+}
+
+.main_content>div:hover>img {
+	transform: scale(1.2);
+}
+
+.main_sub_content {
+	left: 5%;
+	top: 5%;
+	display: none;
+	position: absolute;
+	width: 90%;
+	height: 90%;
+	background-color: rgba(0, 0, 0, 0.8);
+	text-align: center;
+	color: white;
+}
+
+.main_content_1 {
+	z-index: 0;
+	position: relative;
+	width: 50%;
+	height: 100%;
+	float: left;
+	overflow: hidden;
+}
+
+.main_content_2 {
+	z-index: 0;
+	position: relative;
+	width: 50%;
+	height: 55%;
+	float: left;
+	overflow: hidden;
+}
+
+.main_content_3 {
+	z-index: 0;
+	position: relative;
+	width: 50%;
+	height: 45%;
+	float: left;
+	overflow: hidden;
+}
+
+.category {
+	float: left;
+	width: 100%;
+	height: 600px;
+	background-color: rgba(0, 0, 0, 0.01);
+	margin-bottom: 50px;
+}
+
+.category_title {
+	text-align: center;
+	width: 100%;
+	height: 100px;
+	float: left;
+	line-height: 100px;
+}
+
+.category_content {
+	width: 992px;
+	height: 372px;
+}
+
+.category_content>div {
+	width: 121px;
+	height: 121px;
+	border: 1px solid #BDBDBD;
+	float: left;
+	text-align: center;
+	line-height: 121px;
+	transition: 0.2s;
+	color: #BDBDBD;
+	font-weight: bold;
+}
+
+.category_content>div:hover {
+	border: 1px solid #01DFA5;
+	color: #01DFA5;
+}
+
+//
+¼öÁ¤
+.content_list {
+	width: 90%;
+	height: 2000px;
+	background-color: white;
+	float: inherit;
+	text-align: center;
+	margin-bottom: 100px;
+}
+
+.content_title {
+	width: 100%;
+	height: 50px;
+	float: left;
+	text-align: center;
+	line-height: 50px;
+}
+
+.best_content {
+	width: 100%;
+	height: 30%;
+	float: left;
+}
+
+.best_content_list {
+	height: 450px;
+	width: 100%;
+	float: left;
+}
+
+.close_content {
+	width: 100%;
+	height: 30%;
+	float: left;
+}
+
+.close_content_list {
+	height: 450px;
+	width: 100%;
+	float: left;
+}
+
+.new_content {
+	width: 100%;
+	height: 30%;
+	float: left;
+}
+
+.new_content_list {
+	height: 450px;
+	width: 100%;
+	float: left;
+}

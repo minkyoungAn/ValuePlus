@@ -7,15 +7,37 @@ import value.mvc.model.dto.CustomerDTO;
 import value.mvc.model.dto.NoticeDTO;
 import value.mvc.model.dto.ProductDTO;
 import value.mvc.model.dto.QuestionDTO;
+import value.mvc.model.dto.TransactionalInformationDTO;
 
 public interface CustomerDAO {
+	/**
+	 * 마이 페이지 비밀번호 수정
+	 */
+	void updatePwByUser(CustomerDTO customerDTO);
+	/**
+	 * 비밀번호 수정하기
+	 */
+	void updatePw(CustomerDTO customerDTO);
+	/**
+	 * 비밀번호 찾기
+	 */
+	String findPw(String id);
+	/**
+	 * 아이디 찾기
+	 */
+	String findId(String name);
 	/**
 	 * 가입하기
 	 * @param customerDTO
 	 * @return
 	 */
-	int joinCustomer (CustomerDTO customerDTO);
+	void joinCustomer (CustomerDTO customerDTO);
+	/**
+	 * 아이디 중복 체크
+	 */
+	int idCheck(String id);
 	
+	int test();
 	/**
 	 * 마이페이지 내정보 보기
 	 * @param id
@@ -43,7 +65,7 @@ public interface CustomerDAO {
 	 * @param password
 	 * @return
 	 */
-	String loginCustomer (String id, String password);
+	String loginCustomer (CustomerDTO customerDTO);
 	
 	
 	/**
@@ -87,7 +109,13 @@ public interface CustomerDAO {
 	 * @param id
 	 * @return
 	 */
-	ProductDTO selectInterest (String id);
+	List<ProductDTO> selectInterest (String id);
+	/**
+	 * 오늘 본 상품 검색
+	 * @param id
+	 * @return
+	 */
+	List<ProductDTO> selectToday (String id);
 	
 	/**
 	 * 관심목록 추가
@@ -108,14 +136,14 @@ public interface CustomerDAO {
 	 * @param id
 	 * @return
 	 */
-	List<ProductDTO> selectSelling (String id);
+	List<TransactionalInformationDTO> selectSelling (String id);
 	
 	/**
 	 * 구매내역보기 (내가 응찰한 내역)
 	 * @param id
 	 * @return
 	 */
-	List<ProductDTO> selectBuying (String id);
+	List<TransactionalInformationDTO> selectBuying (String id);
 
 	/**
 	 * 공지사항 검색
@@ -172,5 +200,27 @@ public interface CustomerDAO {
 	 * @return
 	 */
 	int deleteQuestion (String questionNo);
+	
 
+	/**
+	 * 내정보수정
+	 * @param accountDTO
+	 * @return
+	 */
+	int updateProfile (CustomerDTO customerDTO);
+
+	
+	/**
+	 * 민경추가 1215 오늘본상품 24시 삭제
+	 */
+	void deleteTodaySeeProduct();
+	/**
+	 * 민경추가 12/16 낙찰자 판매자 메일보낼 정보가져오기
+	 */
+	String selectMailingEmail(String id);
+	String selectMailingProductName(String productNo);
+	String selectMailingSellerId(String productNo);
+	List<TransactionalInformationDTO> selectWaitSelling(String id);
+	
+	
 }

@@ -1,15 +1,33 @@
 package value.mvc.model.dto;
 
 public class AccountDTO {
-	private String id;
+	private String userId;
+	private String bankName;
 	private String accountHolder;
 	private String accountNo;
 	
-	public String getId() {
-		return id;
+	public AccountDTO() {}
+	
+	
+	
+	public AccountDTO(String userId, String bankName, String accountNo) {
+		super();
+		this.userId = userId;
+		this.bankName = bankName;
+		this.accountNo = accountNo;
 	}
-	public void setId(String id) {
-		this.id = id;
+
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getBankName() {
+		return bankName;
+	}
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
 	}
 	public String getAccountHolder() {
 		return accountHolder;
@@ -23,6 +41,5 @@ public class AccountDTO {
 	public void setAccountNo(String accountNo) {
 		this.accountNo = accountNo;
 	}
-	
 	
 }

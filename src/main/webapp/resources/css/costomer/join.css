@@ -1,0 +1,223 @@
+#backImg {
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: -3;
+}
+
+.backImg_wrap {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: -2;
+	background-color: rgba(255, 255, 255, 0.4);
+}
+
+.join_wrap {
+	width: 100%;
+	height: 550px;
+	float: left;
+}
+
+.join_form {
+	margin-top: 70px;
+	width: 40%;
+	height: 65.6%;
+}
+
+.join_form_main {
+	border-radius: 10px;
+	width: 80%;
+	height: 100%;
+	background-color: white;
+	overflow: hidden;
+	width: 80%;
+	overflow: hidden;
+}
+
+.join_form_main_wrap {
+	width: 60%;
+	height: 80%;
+}
+
+.join_form_main>h3 {
+	width: 100%;
+	height: 40px;
+	float: left;
+	text-align: center;
+	font-weight: normal;
+	line-height: 40px;
+	font-size: 25px;
+}
+
+.join_form_main>p {
+	width: 100%;
+	height: 20px;
+	float: left;
+	margin-bottom: 20px;
+	font-size: 15px;
+	text-align: center;
+	color: gray;
+}
+
+.input_join {
+	padding-left: 10px;
+	box-sizing: border-box;
+	height: 28px;
+	float: left;
+	border: 2px solid rgba(0, 0, 0, 0.1);
+	border-radius: 7px;
+	width: 35%;
+	margin-left: 40px;
+	margin-top: 5px;
+	width: 35%;
+	overflow: hidden;
+}
+
+.input_join>input {
+	width: 90%;
+	height: 100%;
+	float: left;
+	outline: none;
+}
+
+.join_button {
+	margin-top: 30px;
+	float: left;
+	width: 100%;
+	height: 52px;
+	float: left;
+}
+
+.join_button>input {
+	width: 50%;
+	height: 100%;
+	float: left;
+}
+
+.join_id>input {
+	width: 80%;
+}
+
+.join_id>.id_chk {
+	font-weight: bold;
+	cursor: pointer;
+	text-align: center;
+	width: 20%;
+	font-size: 12px;
+	background-color: rgba(0, 0, 0, 0.1);
+	color: white;
+}
+
+.join_address_btn {
+	padding: 0px;
+	transition: 0.5s;
+	cursor: pointer;
+	border: 2px solid #9bbbd4;
+}
+
+.join_address_btn>input {
+	cursor: pointer;
+	color: gray;
+	font-weight: bold;
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+	background-color: white;
+	outline: none;
+	width: 100%;
+	transition: 0.5s;
+}
+
+.join_address_btn:hover>input {
+	color: #01DFA5;
+}
+
+.join_address_btn:hover {
+	border: 2px solid #01DFA5;
+}
+
+.join_address_email>input {
+	font-size: 11px;
+	width: 80%;
+}
+
+.join_address_email>.email_btn {
+	cursor: pointer;
+	width: 20%;
+	font-weight: bold;
+	color: white;
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.join_address_email_chk {
+	padding-left: 10px;
+	box-sizing: border-box;
+	height: 28px;
+	float: left;
+	width: 35%;
+	margin-left: 80px;
+	margin-top: 5px;
+	width: 35%;
+	overflow: hidden;
+	padding-left: 10px;
+}
+
+.join_address_email_chk>input {
+	color: #01DFA5;
+	width: 90%;
+	height: 100%;
+	float: left;
+	outline: none;
+}
+
+.join_submit {
+	background-color: white;
+	border: 2px solid #01DFA5;
+	border-right: 1px solid white;
+	color: #01DFA5;
+	border: 2px solid #01DFA5;
+	border-radius: 0px 0px 0px 10px;
+	transition: 0.3s;
+	cursor: pointer;
+}
+
+.join_reset {
+	cursor: pointer;
+	transition: 0.3s;
+	background-color: white;
+	border: 2px solid #01DFA5;
+	border-left: 2px solid white;
+	border-radius: 0px 0px 10px 0px;
+	color: #01DFA5;
+	transition: 0.3s;
+	color: #01DFA5;
+}
+
+.join_submit:hover {
+	font-size: 20px;
+	border: 2px solid #01DFA5;
+	background-color: #01DFA5;
+	color: white;
+}
+
+.join_reset:hover {
+	font-size: 20px;
+	border: 2px solid #01DFA5;
+	background-color: #01DFA5;
+	color: white;
+}
+
+.join_address {
+	border: 2px solid #fef01b;
+}
+
+.join_address>input {
+	color: gray;
+	font-weight: bold;
+}

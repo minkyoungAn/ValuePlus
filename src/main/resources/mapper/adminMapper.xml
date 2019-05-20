@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminMapper">
+<sql id="selectCustomer">
+ 		select user_id,pw,name,email,birth,zipNo,roadAddrPart1,addrDetail,phone,grade from customer
+</sql>
+	<resultMap type="questionDTO" id="questionMap">
+  		  <id column="question_no" property="questionNo"/>
+  		  <result column="user_id" property="userId"/>
+  		  <result column="question_Title" property="questionTitle"/>
+  		  <result column="question_Content" property="questionContent"/>
+  		  <result column="question_Writedate" property="questionWritedate"/>
+  		  <result column="question_process" property="questionProcess"/>
+  		  <result column="answer_content" property="answerContent"/>
+	</resultMap>
+	<resultMap type="accountDTO" id="accountMap">
+  		  <id column="user_id" property="userId"/>
+  		  <result column="bank_name" property="bankName"/>
+  		  <result column="account_Holder" property="accountHolder"/>
+  		  <result column="account_No" property="accountNo"/>
+	</resultMap>
+	<resultMap type="transactionalInformationDTO" id="selectSellingMap">
+		<id property="customerId" column="USER_ID" />
+		<result property="productNo" column="product_no" />
+		<result property="prodImg" column="THUMBNAIL_PATH" />
+		<result property="prodName" column="PRODUCT_NAME" />
+		<result property="bidderDate" column="DEADLINE" />
+		<result property="nowPrice" column="PRICE" />
+		<result property="prodState" column="PROCESS_STATE" />
+	</resultMap>
+	<resultMap type="transactionalInformationDTO" id="selectBuyingMap">
+		<id property="customerId" column="USER_ID" />
+		<result property="prodImg" column="THUMBNAIL_PATH" />
+		<result property="prodName" column="PRODUCT_NAME" />
+		<result property="bidderDate" column="DEADLINE" />
+		<result property="nowPrice" column="PRICE" />
+		<result property="prodState" column="PROCESS_STATE" />
+	</resultMap>
+	<resultMap type="productDTO" id="productMap">
+  		  <id column="product_no" property="productNo"/>
+  		  <result column="product_name" property="productName"/>
+  		  <result column="price" property="price"/>
+  		  <result column="description" property="description"/>
+  		  <result column="deadline" property="deadline"/>
+  		  <result column="bid_unit" property="bidUnit"/>
+  		   <result column="successful_bidder" property="successfulBidder"/>
+  		  <result column="division_no" property="divisionNo"/>
+  		  <result column="hits" property="hits"/>
+  		  <result column="start_price" property="startPrice"/>
+  		  <result column="bid_count" property="bidCount"/>
+  		  <result column="category_name" property="categoryName"/>
+  		  <result column="auction_during" property="auctionDuring"/>
+  		  <result column="user_id" property="userId"/>
+	</resultMap>
+	
+	<resultMap type="customerDTO" id="customerMap">
+  		  <id column="user_id" property="id"/>
+  		  <result column="pw" property="pw"/>
+  		  <result column="name" property="name"/>
+  		  <result column="email" property="email"/>
+  		  <result column="birth" property="birth"/>
+  		  <result column="zipNo" property="zipNo"/>
+  		  <result column="roadAddrPart1" property="roadAddrPart1"/>
+  		  <result column="addrDetail" property="addrDetail"/>
+  		  <result column="phone" property="phone"/>
+  		  <result column="grade" property="grade"/>
+	</resultMap>
+	
+	<resultMap type="noticeDTO" id="noticeMap">
+  		  <id column="notice_no" property="noticeNo"/>
+  		  <result column="notice_Title" property="noticeTitle"/>
+  		  <result column="notice_Writedate" property="noticeWritedate"/>
+  		  <result column="notice_Content" property="noticeContent"/>
+	</resultMap>
+	<resultMap type="sellingListDTO" id="sellingListMap">
+  		  <id column="product_no" property="productNo"/>
+  		  <result column="user_id" property="userId"/>
+	</resultMap>
+	<select id="selectAllUser" resultMap="customerMap">
+		select user_id as id,pw,name,email,to_char(birth,'yy-mm-dd') birth,zipNo,
+		(roadAddrPart1||addrDetail) as address,phone,grade 
+		from customer order by user_id
+	</select>
+	<insert id="insertSellingList" parameterType="sellingListDTO">
+		insert into selling_list
+		values(#{productNo},#{userId}) 
+	</insert>
+	<delete id="deleteByName" parameterType="string">
+		delete from customer where user_id=#{id}
+	</delete>
+	<select id="productList" resultMap="productMap">
+		select product_no,product_name,price,description,
+		deadline,bid_unit,successful_bidder,division_no,hits,start_price,bid_count,category_name,auction_during from product order by product_no
+	</select>
+	<delete id="deleteByProductName" parameterType="string">
+		delete from product where product_no=#{productNo}
+	</delete>
+	<select id="productListByState" resultMap="productMap">
+		select p.product_no productNo,p.product_name productName,p.price price,p.description description,
+		p.deadline deadline,p.bid_unit bidUnit,p.successful_bidder successfulBidder,p.division_no divisionNo,
+		p.hits hits,p.start_price startPrice,p.bid_count bidCount,p.category_name categoryName,p.auction_during auctionDuring,p.user_id userId
+		from product p
+		join process p2
+		on p2.product_no = p.product_no
+		where process_state = #{state}
+	</select>
+	<update id="updatePermit" parameterType="string">
+		update process
+		set process_state='경매중'
+		where Product_No = #{productNo}
+	</update>
+	<update id="updateNotice" parameterType="noticeDTO">
+		update notice
+		set notice_title=#{noticeTitle},
+		notice_content=#{noticeContent},
+		notice_writedate=sysdate
+		where notice_no=#{noticeNo}
+	</update>
+	<select id="selectQuestion" resultMap="questionMap">
+		select question_no,user_id,question_Title,question_Content,question_Writedate,question_process from question order by question_no
+	</select>
+	
+	<select id="selectQuestionByTitle" resultMap="questionMap">
+		select question_no,user_id,question_Title,question_Content,question_Writedate,
+		question_process,answer_content
+		from question
+		where question_no = #{questionNo}
+	</select>
+	
+	<select id="selectQuestionByProcess" resultMap="questionMap">
+		select question_no,user_id,question_Title,question_Content,question_Writedate,
+		question_process,answer_content
+		from question
+		where question_process = #{questionProcess}
+	</select>
+	
+	<select id="selectNotice" resultMap="noticeMap">
+		select notice_no,notice_title,notice_writedate,notice_content from notice order by notice_no
+	</select>
+	
+	<select id="selectNoticeByTitle" parameterType="string" resultMap="noticeMap">
+		select notice_no,notice_title,notice_writedate,notice_content from notice
+		where notice_no=#{noticeNo}
+	</select>
+	
+	<delete id="deleteNotice" parameterType="string">
+		delete from notice where notice_no=#{noticeNo}
+	</delete>
+	
+	<insert id="insertNotice" parameterType="noticeDTO">
+		insert into notice 
+		values('n'||NOTICE_S.Nextval,#{noticeTitle},sysdate,#{noticeContent})
+	</insert>
+	
+	<update id="insertAnswer" parameterType="questionDTO">
+		update question 
+		set answer_content=#{answerContent}, question_process='YES'
+		where question_no=#{questionNo}
+	</update>
+	<update id="updateAnswer" parameterType="questionDTO">
+		update question 
+		set answer_content=#{answerContent}, question_process='YES'
+		where question_no=#{questionNo}
+	</update>
+	<update id="updateDeadline" parameterType="productDTO">
+		update product 
+		set START_DATE=sysdate, DEADLINE=(sysdate+#{deadline})
+		where product_no=#{productNo}
+	</update>
+	<update id="deleteAnswer" parameterType="string">
+		update question 
+		set Answer_Content=null , question_Process='NO'
+		where question_no= #{questionNo}
+	</update>
+	<delete id="deleteProcess" parameterType="string">
+		delete from process
+		where product_no=#{productNo}
+	</delete>
+	
+	<select id="selectProductByKeyword" resultMap="productMap" parameterType="string">
+		select product_no,product_name,price,description,
+		deadline,bid_unit,successful_bidder,division_no,hits,start_price,bid_count,
+		category_name,auction_during from product where product_name like '%'||#{keyword}||'%' 
+		or hits like '%'||#{keyword}||'%'
+		or price like '%'||#{keyword}||'%'
+		or deadline like '%'||#{keyword}||'%'
+		or bid_count like '%'||#{keyword}||'%'
+		or auction_during like '%'||#{keyword}||'%'
+		 or bid_unit like '%'||#{keyword}||'%'
+		 or start_price like '%'||#{keyword}||'%'
+		or description like '%'||#{keyword}||'%' or Category_Name like '%'||#{keyword}||'%'
+	</select>
+	<select id="selectUserByKeyword" resultMap="customerMap" parameterType="string">
+		select user_id,pw,name,email,to_char(birth,'yy-mm-dd') birth,zipNo,roadAddrPart1,addrDetail,phone,grade from customer
+		 where user_id like '%'||#{keyword}||'%' 
+		or name like '%'||#{keyword}||'%' or birth like '%'||#{keyword}||'%' 
+		or zipNo like '%'||#{keyword}||'%' or roadAddrPart1 like '%'||#{keyword}||'%'
+		or addrDetail like '%'||#{keyword}||'%' or phone like '%'||#{keyword}||'%' 
+		or grade like '%'||#{keyword}||'%'
+	</select>
+	<select id="selectNoticeByKeyword" resultMap="noticeMap" parameterType="string">
+		select notice_no,notice_title,notice_writedate,notice_content from notice
+		 where notice_title like '%'||#{keyword}||'%' 
+		 or notice_writedate like '%'||#{keyword}||'%' or notice_content like '%'||#{keyword}||'%'
+	</select>
+	<select id="selectQuestionByKeyword" resultMap="questionMap" parameterType="string">
+		select question_no,user_id,question_Title,question_Content,question_Writedate,question_process from question
+		 where user_id like '%'||#{keyword}||'%' 
+		 or question_Title like '%'||#{keyword}||'%' 
+		 or question_Content like '%'||#{keyword}||'%' 
+		 or question_Writedate like '%'||#{keyword}||'%'
+		 or question_process like '%'||#{keyword}||'%'
+	</select>
+	<select id="selectPermitByKeyword" resultMap="productMap" parameterType="string">
+		select p.product_no productNo,p.product_name productName,p.price price,p.description description,
+		p.deadline deadline,p.bid_unit bidUnit,p.successful_bidder successfulBidder,p.division_no divisionNo,
+		p.hits hits,p.start_price startPrice,p.bid_count bidCount,p.category_name categoryName,p.auction_during auctionDuring
+		from product p
+		join process p2
+		on p2.product_no = p.product_no
+		 where product_name like '%'||#{keyword}||'%' 
+		  or auction_during like '%'||#{keyword}||'%'
+		or price like '%'||#{keyword}||'%'
+		 or bid_unit like '%'||#{keyword}||'%'
+		 or start_price like '%'||#{keyword}||'%'
+		or description like '%'||#{keyword}||'%' or Category_Name like '%'||#{keyword}||'%'
+	</select>
+	
+	<select id="selectSellById" parameterType="string" resultMap="selectSellingMap">
+		select s.product_no as productNo, p.PRODUCT_NAME as prodName,
+		p.DEADLINE as bidderDate, p.PRICE as nowPrice, r.PROCESS_STATE as
+		prodState
+		from SELLING_LIST s
+		inner join PRODUCT p on s.PRODUCT_NO = p.PRODUCT_NO
+		inner join PRODUCT_PHOTO f on f.PRODUCT_NO = p.PRODUCT_NO
+		inner join PROCESS r on r.product_no = p.PRODUCT_NO
+		where s.USER_ID = #{id}
+	</select>
+	<select id="selectBuyById" parameterType="string" resultMap="selectBuyingMap">
+		select p.product_no as productNo, p.PRODUCT_NAME as prodName,
+		p.DEADLINE as bidderDate, p.PRICE as nowPrice, r.PROCESS_STATE
+		as prodState
+		from BUYING_LIST s
+		inner join PRODUCT p on s.PRODUCT_NO = p.PRODUCT_NO
+		inner join PRODUCT_PHOTO f on f.PRODUCT_NO = s.PRODUCT_NO
+		inner join PROCESS r on r.product_no = s.PRODUCT_NO
+		where s.USER_ID = #{id}
+	</select>
+	<select id="selectQuestionById" resultMap="questionMap">
+		select question_no,user_id,question_Title,question_Content,question_Writedate,
+		question_process,answer_content
+		from question
+		where user_id = #{userId}
+	</select>
+	
+	<select id="selectInterestById" resultMap="productMap">
+		select p.product_no productNo,p.product_name productName,p.price price,p.description description,
+		p.deadline deadline,p.bid_unit bidUnit,p.successful_bidder successfulBidder,p.division_no divisionNo,
+		p.hits hits,p.start_price startPrice,p.bid_count bidCount,p.category_name categoryName,p.auction_during auctionDuring
+		from product p
+		join interest_item p2
+		on p2.product_no = p.product_no
+		where p2.user_id=#{id}
+	</select>
+	<select id="selectSeenById" resultMap="productMap">
+		select p.product_no productNo,p.product_name productName,p.price price,p.description description,
+		p.deadline deadline,p.bid_unit bidUnit,p.successful_bidder successfulBidder,p.division_no divisionNo,
+		p.hits hits,p.start_price startPrice,p.bid_count bidCount,p.category_name categoryName,p.auction_during auctionDuring
+		from product p
+		join seen_product p2
+		on p2.product_no = p.product_no
+		where p2.user_id=#{id}
+	</select>
+	<select id="selectAccountById" resultMap="accountMap">
+		select a.user_id,a.bank_name,a.account_holder,a.account_no
+		from account a
+		join customer c
+		on a.user_id = c.user_id
+		where c.user_id=#{id}
+	</select>
+	
+	<select id="selectEmailById" parameterType="string" resultType="string">
+		select email
+		from customer 
+		where user_id=#{id}
+	</select>
+	<select id="selectProductByNo" parameterType="string" resultType="string">
+		select product_name
+		from product
+		where product_no=#{productNo}
+	</select>
+	<select id="selectAddressById" parameterType="string" resultType="string">
+		select (zipno||roadaddrpart1||addrdetail) as address
+		from customer
+		where user_id=#{id}
+	</select>
+</mapper>
